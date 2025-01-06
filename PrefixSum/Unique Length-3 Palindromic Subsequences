@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int countPalindromicSubsequence(string s) {
+      unordered_map<char,pair<int,int>>first_last;
+      for(int i=0;i<s.size();i++)
+      {
+        if(!first_last.count(s[i]))
+        {
+            first_last[s[i]].first=i;
+            first_last[s[i]].second=i;
+        }
+        else
+        {
+            first_last[s[i]].second=i;
+        }
+      }
+      int count=0;
+      for(auto it:first_last)
+      {
+         if(it.second.first==it.second.second)continue;
+         else
+         {
+            count+=unordered_set<char>(s.begin()+it.second.first+1,s.begin()+it.second.second).size();
+         }
+      }
+      return count;
+    }
+};

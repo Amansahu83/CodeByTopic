@@ -1,1 +1,24 @@
 
+class Solution {
+public:
+    int minimumLength(string s) {
+        vector<int>rightFreq(26,0);
+        vector<int>leftFreq(26,0);
+        for(int i=0;i<s.size();i++)rightFreq[s[i]-'a']++;
+        for(int i=0;i<s.size();i++)
+        {
+            rightFreq[s[i]-'a']--;
+            if(leftFreq[s[i]-'a']>0 && rightFreq[s[i]-'a']>0)
+            {
+                leftFreq[s[i]-'a']--;
+            }
+            else
+            {
+                leftFreq[s[i]-'a']++;         
+            }
+        }
+        int size=0;
+        for(int i=0;i<leftFreq.size();i++)size+=leftFreq[i];
+        return size;
+    }
+};

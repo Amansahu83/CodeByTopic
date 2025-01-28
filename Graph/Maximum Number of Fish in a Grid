@@ -1,1 +1,44 @@
-
+class Solution {
+    int solve(int delrow[],int delcol[],int row,int col,vector<vector<int>>grid,vector<vector<int>>&vis)
+    {
+         if (row < 0 || col < 0 || row == grid.size() || col == grid[0].size()) return 0;
+        if (grid[row][col] == 0) return 0;
+       
+        vis[row][col]=1;
+      int count=grid[row][col];
+        int n=grid.size();
+        int m=grid[0].size();
+        for(int i=0;i<4;i++)
+        {
+            int nrow=row+delrow[i];
+            int ncol=col+delcol[i];
+            if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && grid[nrow][ncol]!=0 && !vis[nrow][ncol])
+            {
+               count+= solve(delrow,delcol,nrow,ncol,grid,vis);
+            }
+        }
+        return count;
+    }
+public:
+    int findMaxFish(vector<vector<int>>& grid) {
+        int mx=0;
+        int delrow[]={-1,0,+1,0};
+        int delcol[]={0,+1,0,-1};
+        int n=grid.size();
+        int m=grid[0].size();
+    vector<vector<int>>vis(n,vector<int>(m,0));
+        for(int i=0;i<grid.size();i++)
+        {
+            for(int j=0;j<grid[0].size();j++)
+            {
+                int count=0;
+                if(grid[i][j]!=0)
+                {
+                    count=solve(delrow,delcol,i,j,grid,vis);
+                   mx=max(mx,count); 
+                }
+            }
+        }
+        return mx;
+    }
+};
